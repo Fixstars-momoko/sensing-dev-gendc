@@ -142,6 +142,13 @@ jobs:
         files: "${{ github.workspace }}/check_archive_content/gendc/LICENSE.txt, ${{ github.workspace }}/check_archive_content/gendc/include/gendc_separator, ${{ github.workspace }}/check_archive_content/gendc/lib/gstreamer-1.0"
         fail: true
 
+    - name: Check if the archive exists
+      id: check_package_ubuntu
+      uses: andstor/file-existence-action@v3
+      with:
+        files: ${{ github.workspace }}/gendc-${{ github.ref_name }}-win64.zip
+        fail: true
+
     - name: Release-Windows
       uses: softprops/action-gh-release@v1
       with:
