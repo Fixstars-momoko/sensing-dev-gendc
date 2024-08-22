@@ -142,14 +142,14 @@ jobs:
       id: check_package_ubuntu
       uses: andstor/file-existence-action@v3
       with:
-        files: ${{ github.workspace }}/gendc-${{ github.ref_name }}-win64.zip
+        files: gendc-${{ github.ref_name }}-win64.zip
         fail: true
 
     - name: Release-Windows
       uses: softprops/action-gh-release@v1
       with:
           files: |
-              ${{ github.workspace }}/gendc-${{ github.ref_name }}-win64.zip
+              gendc-${{ github.ref_name }}-win64.zip
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
