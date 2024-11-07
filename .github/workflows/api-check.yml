@@ -11,6 +11,7 @@ jobs:
       PKG_CONFIG_INSTALL: C:\pkg-config
       PKG_CONFIG_VERSION: 0.28-1
       NINJA_INSTALL: C:\ninja
+      VCPKG_VERSION: 2024.10.21
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4.1.1
@@ -70,7 +71,7 @@ jobs:
       run: |
         git clone https://github.com/microsoft/vcpkg.git
         cd vcpkg
-        git checkout 2024.07.12
+        git checkout ${{env.VCPKG_VERSION}}
         .\bootstrap-vcpkg.bat  && cd ../
 
     - name: Install dependencies
