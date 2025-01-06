@@ -151,7 +151,8 @@ jobs:
     - name: Install dependencies
       run: | 
         pip3 install meson==1.1.0 ninja
-        sudo apt-get update && sudo apt-get upgrade
+        sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu jammy-updates main"
+        sudo apt update
         echo "========"
         sudo apt-cache madison libglib2.0-dev
         echo "========"
