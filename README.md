@@ -1,19 +1,96 @@
-# gendc-python
+# GenDC Tools
 
-The gendc descriptor comprises  main elements: the descriptor the container data 
+**GenDC (Generic Data Container)** is a flexible data format developed by the [GenICam ( Generic Interface for Cameras)](https://www.emva.org/standards-technology/genicam/) working group under the [European Machine Vision Association (EMVA)](https://www.emva.org/). 
 
+It is designed to standardize the representation and transmission of various types of imaging data across different transport layers.​
 
-descriptor includes the the container header, the component header, and the part header.
+The library provided in C++ and Python in the repository allows you to extract specific information and data from a GenDC container without needing an in-depth understanding of its internal structure or descriptor format.
 
-the container data includes all part data
+* [Key Features of GenDC](#key-features-of-gendc)
+* [Installation](#installation)
+* [Quick start (Python)](#quick-start-python)
 
-##  GenDC Containers layout
+## Key Features of GenDC
+
+### 1. Developed by EMVA's GenICam Working Group
+
+GenDC is one of the GenICam modules developed by the EMVA, aiming to provide a generic programming interface for all cameras and imaging devices. 
+
+### 2. ​Versatility in Data Format
+
+GenDC supports a wide range of data formats commonly used in machine vision—such as 2D, 3D, multi-spectral, compressed formats (e.g., JPEG, H.264), and metadata like GenICam chunks, histograms and statistics. 
+
+Beyond imaging, any type of data (including non-pixel based data) can be encapsulated in a GenDC container.
+
+The structure of the container is fully defined in the Descriptor, allowing precise customization of how the data is organized and interpreted, regardless of its type.
+
+### 3. Self-Describing File Structure
+
+In GenDC, the structure of the container is explicitly defined using a Descriptor, which describes how the Data is organized, including the layout, types, and relationships of various components.
+
+This self-describing approach allows any kind of data — images, metadata, sensor readings, etc. — to be included and interpreted correctly by receivers, even without prior knowledge of the specific data format.
+
+### 4. Transport Layer Neutrality
+
+GenDC is independent of the underlying transport protocol, meaning it can be used across various transport technologies such as GigE Vision, USB3 Vision, CoaXPress, and Camera Link HS.
+
+This allows the same data format to be transmitted over different interfaces without modification, simplifying system integration and increasing flexibility.
+
+### 5. Transport Layer Agnostic
+
+The transport layer does not need to interpret the contents of the GenDC payload, as it is treated as an opaque data block.
+
+## Installation
+
+If you want to install a whole Sensing-Dev Software development kit (Sensing-Dev SDK) that has all components of camera aqcuisioon library and efficient image processing framework with API, follow the instruction on the [Sensing-Dec webpage](https://sensing-dev.github.io/doc/).
+
+The simgle library of GenDC Tools for Python and C++ are availabe:
+
+### Python
+```bash
+pip install gendc-python
+```
+
+### C++ Header Library
+
+Download the latest release package in [Release](https://github.com/Sensing-Dev/GenDC/releases) for Linux and Windows.
+
+## Quick start (Python)
+
+Download sample GenDC binary file (`output.bin`) from [here](https://github.com/Sensing-Dev/GenDC/blob/main/test/generated_stub/output.bin) and load it as `binary_gendc_information`.
+
+```python
+from gendc_python.gendc_separator import descriptor
+
+with open('output.bin', mode='rb') as ifs:
+  binary_gendc_information = ifs.read()
+  gendc_container = descriptor.Container(binary_gendc_information)
+
+  if descriptor.is_gendc(gendc_container):
+    print('This data is a valid GenDC data')
+```
+
+See more details in tutorials on the [Sensing-Dec webpage](https://sensing-dev.github.io/doc/).
+
+## Quick start (C++ header library)
+
+Adding an include directory to the compiler's search path using the `-I` flag.
+
+```cpp
+#include "gendc_common.h"
+
+int main(int argc, char* argv[]){
+
+}
+```
+
+##  GenDC Containers layout 
 - **Container Header**
   - **Component 1 Header (RGB Planar Intensity)**
     - Part 1 Header
     - Part 2 Header
     - Part 3 Header
-  - **Component 2 Header (Range)**
+  - **Component 2 Header (Range)** 
     - Part 1 Header
   - **Component 3 Header (Metadata)**
     - Part 1 Header
@@ -43,12 +120,7 @@ the container data includes all part data
       - Part 1 Data (Metadata Chunk)
 
 
-## Quick start
-```python
-from gendc_python.gendc_separator import descriptor
 
-gendc_container = descriptor.Container("binary_gendc_information")
-```
 
 ## API
 
